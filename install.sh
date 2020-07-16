@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo '## Install Bro ##'
+echo '## Install bro ##'
 # Install on ProbeManager server
 # Get args
 arg=$1
@@ -24,8 +24,8 @@ elif [ -f /etc/debian_version ]; then
     # Ubuntu
     if [[ "$TRAVIS" = true ]]; then
         if ! type bro ; then
-            curl http://download.opensuse.org/repositories/network:bro/xUbuntu_14.04/Release.key | sudo apt-key add -
-            echo "deb http://download.opensuse.org/repositories/network:/bro/xUbuntu_14.04/ /" | sudo tee -a /etc/apt/sources.list
+            curl -fsSL https://download.opensuse.org/repositories/security:bro/xUbuntu_18.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security:bro.gpg > /dev/null
+            echo 'deb http://download.opensuse.org/repositories/security:/bro/xUbuntu_18.04/ /' | sudo tee /etc/apt/sources.list.d/security:bro.list
             sudo apt-get update -qq
             sudo apt-get -y --allow-unauthenticated install bro
             export PATH=/opt/bro/bin:$PATH && export LD_LIBRARY_PATH=/opt/bro/lib/:$LD_LIBRARY_PATH
@@ -41,7 +41,7 @@ elif [ -f /etc/debian_version ]; then
         if ! type bro ; then
             sudo apt update
             sudo apt install cmake make gcc g++ flex bison libpcap-dev libssl-dev python-dev swig zlib1g-dev libmagic-dev libgeoip-dev sendmail libcap2-bin wget curl ca-certificates
-            wget https://www.bro.org/downloads/bro-"$BRO_VERSION".tar.gz
+            wget https://download.zeek.org/bro-"$BRO_VERSION".tar.gz
             tar xf bro-"$BRO_VERSION".tar.gz
             ( cd bro-"$BRO_VERSION" && ./configure )
             ( cd bro-"$BRO_VERSION" && make -j$(nproc)  )
