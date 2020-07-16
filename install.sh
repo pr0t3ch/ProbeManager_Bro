@@ -7,7 +7,7 @@ arg=$1
 destfull=$2
 
 if [[ "$ZEEK_VERSION" == "" ]]; then
-    ZEEK_VERSION="2.5.3"
+    ZEEK_VERSION="3.0.7"
 fi
 config=""
 rules=""
